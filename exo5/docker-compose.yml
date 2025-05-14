@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  flask:
+    build: ./app
+    container_name: flask_app
+    expose:
+      - "5000"
+    networks:
+      - mynet
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_web2
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "9000:80"
+    depends_on:
+      - flask
+    networks:
+      - mynet
+
+networks:
+  mynet:
