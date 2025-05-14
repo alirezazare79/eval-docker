@@ -1,0 +1,35 @@
+# build des assets avec Node.js 
+FROM node:20-alpine AS build
+
+# Dossier de travail
+WORKDIR /app
+
+# Copier les fichiers nécessaires
+COPY package*.json ./
+
+# Installer les dépendances
+RUN npm install
+
+# Copier le reste du projet 
+COPY . .
+
+# Compiler les fichiers statiques
+RUN npm run build
+
+
+# Image de production avec Nginx
+FROM nginx:alpine AS production
+
+# Supprimer le fichier de config 
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copier les fichiers statiques
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Exposer le port
+EXPOSE 80
+
+# Lancement de Nginx
+CMD ["nginx", "-g", "daemon off;"]
