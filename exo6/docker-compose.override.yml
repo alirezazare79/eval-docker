@@ -1,0 +1,6 @@
+services:
+  flask:
+    volumes:
+      - ./app:/app
+    environment:
+      - DEBUG=True

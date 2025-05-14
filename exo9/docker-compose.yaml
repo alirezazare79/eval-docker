@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  flask:
+    build: .
+    container_name: flask_secure
+    ports:
+      - "5000:5000"
+    mem_limit: 256m     # Limitation mémoire
+    cpus: 0.5           # Limitation CPU
+    networks:
+      - secure_net
+
+networks:
+  secure_net:
+    driver: bridge

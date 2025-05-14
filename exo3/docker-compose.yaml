@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  volume_app:
+    build: .
+    container_name: volume_container
+    volumes:
+      - data_volume:/data               # Volume pour les données
+      - logs_volume:/var/log/app        # Volume pour les logs
+      - ./config:/config:ro             # Dossier local monté en lecture seule
+    tty: true
+
+volumes:
+  data_volume:
+  logs_volume:

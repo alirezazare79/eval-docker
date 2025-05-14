@@ -1,0 +1,9 @@
+# Dockerfile
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y nano
+
+# Créer les répertoires
+RUN mkdir /data /var/log/app /config
+
+CMD ["tail", "-f", "/dev/null"]  # Pour que le conteneur reste actif
